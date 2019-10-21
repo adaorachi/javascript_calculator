@@ -60,13 +60,30 @@ class Calculator {
     }
 
     getDisplayNumber(number) {
+        const stringNumber = number.toString();
+        const integerDigits = parseFloat(stringNumber.split('.')[0]);
+        const decimalDigits = stringNumber.split('.')[1];
 
+        let integerDisplay
+        if (isNaN(integerDigits)) {
+            integerDisplay = '';
+        } else {
+            integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
+        }
+
+        if (decimalDigits != null) {
+            return `${integerDisplay}.${decimalDigits}`;
+        } else {
+            return integerDisplay
+        }
     }
 
     updateDisplay() {
         this.currentOperand.innerText = this.getDisplayNumber(this.currentOperator)
         if (this.operation != null) {
             this.previousOperand.innerText = `${this.getDisplayNumber(this.previousOperator)} ${this.operation}`
+        } else {
+            this.previousOperand.innerText = ''
         }
 
     }
